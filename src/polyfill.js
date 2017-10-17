@@ -4,6 +4,7 @@
 import Router from './router.js';
 import GPIOAccess from './gpio/access.js';
 import GPIOPort from './gpio/port.js';
+import I2CAccess from './i2c/access.js';
 
 var serverURL = 'ws://x.x.x.x:33330/'
 
@@ -20,25 +21,6 @@ bone = (() => {
   rt.init(serverURL)
   return rt
 })()
-
-/// ///////////////////////////////////////////////////////////////////////
-// I2CAccess
-
-var i2cPorts = [1]
-
-var I2CAccess = function () {
-  this.init()
-}
-
-I2CAccess.prototype = {
-  init: function () {
-    this.ports = new Map()
-    for (var cnt = 0; cnt < i2cPorts.length; cnt++) {
-      this.ports.set(i2cPorts[cnt], new I2CPort(i2cPorts[cnt]))
-    }
-  },
-  ports: new Map()
-}
 
 function I2CPort (portNumber) {
   this.init(portNumber)
