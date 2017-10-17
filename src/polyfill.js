@@ -5,6 +5,7 @@ import Router from './router.js';
 import GPIOAccess from './gpio/access.js';
 import GPIOPort from './gpio/port.js';
 import I2CAccess from './i2c/access.js';
+import I2CPort from './i2c/port.js'
 
 var serverURL = 'ws://x.x.x.x:33330/'
 
@@ -21,27 +22,6 @@ bone = (() => {
   rt.init(serverURL)
   return rt
 })()
-
-function I2CPort (portNumber) {
-  this.init(portNumber)
-}
-
-I2CPort.prototype = {
-  init: function (portNumber) {
-    this.portNumber = portNumber
-  },
-
-  portNumber: 0,
-  open: function (slaveAddress) {
-    return new Promise((resolve, reject) => {
-      new I2CSlaveDevice(this.portNumber, slaveAddress).then((i2cslave) => {
-        resolve(i2cslave)
-      }, (err) => {
-        reject(err)
-      })
-    })
-  }
-}
 
 function I2CSlaveDevice (portNumber, slaveAddress) {
   return new Promise((resolve, reject) => {
