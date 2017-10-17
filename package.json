@@ -2,11 +2,15 @@
   "name": "polyfill",
   "version": "0.1.0",
   "description": "GPIO and I2C polyfill",
-  "main": "index.js",
+  "main": "polyfill.js",
   "repository": "https://github.com/akkyie/polyfill",
   "author": "Hideyuki Kodama",
   "license": "UNLICENSED",
   "private": false,
+  "scripts": {
+    "build": "rollup src/*.js -o polyfill.js -f iife",
+    "lint": "eslint src/*.js"
+  },
   "devDependencies": {
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
