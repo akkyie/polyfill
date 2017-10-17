@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "private": false,
   "scripts": {
-    "build": "rollup src/polyfill.js -o polyfill.js -f iife",
+    "build": "rollup src/polyfill.js -o build/polyfill.js -f iife",
     "lint": "eslint src/*.js"
   },
   "devDependencies": {
