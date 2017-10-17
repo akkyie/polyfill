@@ -142,20 +142,6 @@ router.prototype = {
 };
 
 /* eslint-disable */
-// Version 2017.09.27
-
-var serverURL = 'ws://x.x.x.x:33330/';
-
-function errLog$1 (str) {
-  console.log('error: ' + str);
-}
-
-bone = (() => {
-  var rt = new router();
-  rt.init(serverURL);
-  return rt
-})();
-
 /// ///////////////////////////////////////////////////////////////////////
 // GPIOAccess
 // Raspberry Pi GPIO Port Number
@@ -179,94 +165,20 @@ GPIOAccess.prototype = {
   onchange: null
 };
 
-var GPIOPort = function (portNumber) {
-  this.init(portNumber);
-};
+/* eslint-disable */
+// Version 2017.09.27
 
-GPIOPort.prototype = {
-  init: function (portNumber) {
-    this.portNumber = portNumber;
-    this.portName = '';
-    this.pinName = '';
-    this.direction = '';
-    this.exported = false;
-    this.value = null;
-    this.onchange = null;
-  },
+var serverURL = 'ws://x.x.x.x:33330/';
 
-  export: function (direction) {
-    return new Promise((resolve, reject) => {
-      var dir = -1;
-      if (direction === 'out') {
-        dir = 0;
-        bone.removeEvent(0x14, this.portNumber);
-      } else if (direction === 'in') {
-        dir = 1;
-        //        console.dir(bone);
-        bone.registerEvent(0x14, this.portNumber, (buf) => {
-          if (typeof this.onchange === 'function') {
-            this.onchange(buf[5]);
-          }
-        });
-      } else {
-        reject('export:direction not valid! [' + direction + ']');
-      }
-      var data = new Uint8Array([this.portNumber, dir]);
-      bone.send(0x10, data).then((result) => {
-        if (result[0] == 0) {
-          reject('GPIOPort(' + this.portNumber + ').export() error');
-        } else {
-          resolve();
-        }
-      }, (error) => {
-        reject(error);
-      });
-    })
-  },
-  read: function () {
-    return new Promise((resolve, reject) => {
-      var data = new Uint8Array([this.portNumber]);
-      bone.send(0x12, data).then((result) => {
-        if (result[0] == 0) {
-          reject('GPIOPort(' + this.portNumber + ').read() error');
-        } else {
-          resolve(result[1]);
-        }
-      }, (error) => {
-        reject(error);
-      });
-    })
-  },
-  write: function (value) {
-    return new Promise((resolve, reject) => {
-      var data = new Uint8Array([this.portNumber, value]);
-      bone.send(0x11, data).then((result) => {
-        if (result[0] == 0) {
-          reject('GPIOPort(' + this.portNumber + ').write() error');
-        } else {
-          resolve();
-        }
-      }, (error) => {
-        reject(error);
-      });
-    })
-  },
-  onchange: null,
-  unexport: function () {
-    return new Promise((resolve, reject) => {
-      var data = new Uint8Array([this.portNumber, value]);
-      bone.send(0x13, data).then((result) => {
-        if (result[0] == 0) {
-          reject('GPIOPort(' + this.portNumber + ').unexport() error');
-        } else {
-          resolve();
-        }
-      }, (error) => {
-        reject(error);
-      });
-    })
-  }
-};
+function errLog$1 (str) {
+  console.log('error: ' + str);
+}
+
+bone = (() => {
+  var rt = new router();
+  rt.init(serverURL);
+  return rt
+})();
 
 /// ///////////////////////////////////////////////////////////////////////
 // I2CAccess
