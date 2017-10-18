@@ -8,14 +8,15 @@
   "license": "UNLICENSED",
   "private": false,
   "scripts": {
-    "build": "rollup src/polyfill.js -o build/polyfill.js -f iife",
-    "watch": "npm run build -w",
+    "build": "rollup -c",
+    "watch": "npm run build -- -w",
     "lint": "eslint src/*.js"
   },
   "devDependencies": {
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "rollup": "^0.50.0"
+    "rollup": "^0.50.0",
+    "rollup-plugin-node-resolve": "^3.0.0"
   }
 }
