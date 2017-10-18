@@ -1,5 +1,5 @@
 export default class Router {
-  init(serverURL) {
+  constructor(serverURL) {
     console.log('bone.init()');
     this.session = 0;
     this.waitQueue = [];
